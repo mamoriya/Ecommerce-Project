@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
@@ -84,6 +84,7 @@ const FilterBar: React.FC<Props> = ({
   onCategoryChange,
   onSortChange,
 }) => {
+  const [selectFocused, setSelectFocused] = useState(false);
   return (
     <motion.div
       style={containerStyle}
@@ -141,16 +142,21 @@ const FilterBar: React.FC<Props> = ({
       {/* Sort */}
       <div style={{ flex: "0 0 auto" }}>
         <p style={sectionTitleStyle}>Sort by Price</p>
-        <motion.select
-          style={selectStyle}
+        <select
+          style={{
+            ...selectStyle,
+            borderColor: selectFocused ? "#6366f1" : "#e0e0e0",
+            boxShadow: selectFocused ? "0 0 0 3px rgba(99,102,241,0.15)" : "none",
+          }}
           value={selectedSort}
           onChange={(e) => onSortChange(e.target.value)}
-          whileFocus={{ borderColor: "#6366f1", boxShadow: "0 0 0 3px rgba(99,102,241,0.15)" }}
+          onFocus={() => setSelectFocused(true)}
+          onBlur={() => setSelectFocused(false)}
         >
           <option value="">Default</option>
           <option value="asc">Low to High</option>
           <option value="desc">High to Low</option>
-        </motion.select>
+        </select>
       </div>
     </motion.div>
   );

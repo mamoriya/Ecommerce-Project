@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const Navbar: React.FC = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { totalItems } = useCart();
 
   const linkStyle = (path: string) => ({
     textDecoration: "none",
@@ -70,8 +72,29 @@ const Navbar: React.FC = () => {
             Home
           </Link>
 
-          <Link to="/cart" style={linkStyle("/cart")}>
+          <Link to="/cart" style={{ ...linkStyle("/cart"), position: "relative", display: "inline-flex", alignItems: "center" }}>
             Cart 🛒
+            {totalItems > 0 && (
+              <span
+                style={{
+                  position: "absolute",
+                  top: "-8px",
+                  right: "-14px",
+                  background: "#764ba2",
+                  color: "white",
+                  borderRadius: "50%",
+                  width: "18px",
+                  height: "18px",
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {totalItems}
+              </span>
+            )}
           </Link>
         </div>
       </div>
@@ -89,8 +112,13 @@ const Navbar: React.FC = () => {
           <Link to="/" style={{ padding: "8px 0", textDecoration: "none", color: "#333" }}>
             Home
           </Link>
-          <Link to="/cart" style={{ padding: "8px 0", textDecoration: "none", color: "#333" }}>
+          <Link to="/cart" style={{ padding: "8px 0", textDecoration: "none", color: "#333", display: "flex", alignItems: "center", gap: "6px" }}>
             Cart 🛒
+            {totalItems > 0 && (
+              <span style={{ background: "#764ba2", color: "white", borderRadius: "50%", width: "18px", height: "18px", fontSize: "11px", fontWeight: 700, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                {totalItems}
+              </span>
+            )}
           </Link>
         </div>
       )}
