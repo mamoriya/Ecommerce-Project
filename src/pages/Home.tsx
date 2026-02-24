@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Product } from "../types/Product";
-import ProductCard from "../components/ProductCard";
 import FilterBar from "../components/FilterBar";
 import { useSearchParams } from "react-router-dom";
 import { fetchCategories } from "../utils/api";
@@ -57,6 +56,7 @@ const Home: React.FC = () => {
     };
 
     loadProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   const handleCategoryChange = (category: string) => {
